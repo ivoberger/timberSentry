@@ -57,7 +57,7 @@ allprojects {
 Add to your module `build.gradle`:
 ```groovy
 dependencies {
-    implementation 'com.github.IIIuminator:timberSentry:Tag'
+    implementation 'com.github.IIIuminator:timberSentry:0.1.0'
 }
 ```
 
