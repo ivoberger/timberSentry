@@ -14,6 +14,7 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
-    api 'com.jakewharton.timber:timber:4.7.1'
+    api "com.jakewharton.timber:timber:$versions.timber"
+    api "io.sentry:sentry-android:$versions.sentry"
 
 }
