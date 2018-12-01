@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
-
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
@@ -16,5 +14,4 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
     api "com.jakewharton.timber:timber:$versions.timber"
     api "io.sentry:sentry-android:$versions.sentry"
-
 }
