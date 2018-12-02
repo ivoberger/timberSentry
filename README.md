@@ -10,8 +10,10 @@ The library provides a `SentryTree` which implements `Timber.Tree` and initializ
 Timber.plant(SentryTree("sentry DSN"))
 // without any arguments works too if you define your DSN using a sentry.properties file
 Timber.plant(SentryTree())
+// now simply use Timber as usual
+Timber.d("Something happened")
 ```
-You might want to initialize Sentry with an `AndroidSentryClientFactory`. To do so simply supply your apllications context like so:
+You might want to initialize Sentry with an `AndroidSentryClientFactory`. To do so simply supply your applications context like so:
 ```Kotlin
 Timber.plant(SentryTree("sentry DSN", this))
 // or if you use a properties file:
