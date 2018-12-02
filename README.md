@@ -1,4 +1,4 @@
-# Timber Sentry
+# Timber Sentry [![](https://jitpack.io/v/IIIuminator/timberSentry.svg)](https://jitpack.io/#IIIuminator/timberSentry)
 
 This is a small library combining the [Sentry][1] error reporting tool and [Timber][2] logging library.
 Currently only Android is supported.
@@ -44,6 +44,25 @@ Timber.e("Something went wrong | extras label | extra data")
 // with a label to data structure you can use the helper functions
 Timber.e("Something went wrong %s, extrasListOrMap.toSentryExtras())
 ```
+
+## Download
+Currently only available via [jitpack.io](https://jitpack.io):
+Add to your top-level `build.gradle`
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+Add to your module `build.gradle`:
+```groovy
+dependencies {
+    implementation 'com.github.IIIuminator:timberSentry:0.1.0'
+}
+```
+
 
 ## License
 
