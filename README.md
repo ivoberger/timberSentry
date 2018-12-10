@@ -37,13 +37,15 @@ val sentryTree = SentryTree(
 )
 Timber.plant(sentryTree)
 ```
-Sentry supports adding extra data to your reports. Additonally to the ways the Snetry SDK provides you can now do this by appending the extras data to your message using a delimiter:
+Sentry supports adding extra data to your reports. Additionally to the ways the Sentry SDK provides you can now do this by appending the extras data to your message using a delimiter:
 ```Kotlin
 Timber.e("Something went wrong | extras label | extra data")
 // if your data is in an Iterable<Pair<String, Any>> or a Map<String,Any>
 // with a label to data structure you can use the helper functions
-Timber.e("Something went wrong %s, extrasListOrMap.toSentryExtras())
+Timber.e("Something went wrong %s", extrasListOrMap.toSentryExtras())
 ```
+By default extras for an event that won't be captured will add these extras will be added to the default Sentry context. Otherwise they'll only be added to the captured event.
+Using the `addAllExtrasToContext` constructor variable this can be changed so extras will always be added to the context while `clearContext` controls if the context is cleared after an event was captured.
 
 ## Download
 Currently only available via [jitpack.io](https://jitpack.io):
@@ -51,7 +53,6 @@ Add to your top-level `build.gradle`
 ```groovy
 allprojects {
     repositories {
-        ...
         maven { url 'https://jitpack.io' }
     }
 }
@@ -59,7 +60,7 @@ allprojects {
 Add to your module `build.gradle`:
 ```groovy
 dependencies {
-    implementation 'com.github.IIIuminator:timberSentry:0.1.0'
+    implementation 'com.github.IIIuminator:timberSentry:0.2.0'
 }
 ```
 
