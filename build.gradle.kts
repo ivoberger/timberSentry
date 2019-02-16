@@ -13,6 +13,7 @@ buildscript {
 }
 
 plugins {
+    id("com.github.dcendents.android-maven") version Versions.com_github_dcendents_android_maven_gradle_plugin
     id("de.fayard.buildSrcVersions") version Versions.de_fayard_buildsrcversions_gradle_plugin
 }
 
@@ -20,13 +21,11 @@ allprojects {
     repositories {
         google()
         jcenter()
-
     }
 }
 
-tasks {
-    val clean by registering(Delete::class) {
-        delete(buildDir)
-    }
+tasks.wrapper {
+    version = Versions.Gradle.runningVersion
+    distributionType = Wrapper.DistributionType.BIN
 }
 

@@ -2,7 +2,10 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    id("com.github.dcendents.android-maven")
 }
+
+group = "com.ivoberger"
 
 android {
     compileSdkVersion(28)
