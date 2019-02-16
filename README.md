@@ -44,7 +44,7 @@ Timber.e("Something went wrong | extras label | extra data")
 // with a label to data structure you can use the helper functions
 Timber.e("Something went wrong %s", extrasListOrMap.toSentryExtras())
 ```
-By default extras for an event that won't be captured will add these extras will be added to the default Sentry context. Otherwise they'll only be added to the captured event.
+By default extras for an event that won't be captured will be added to the default Sentry context. Otherwise they'll only be added to the captured event.
 Using the `addAllExtrasToContext` constructor variable this can be changed so extras will always be added to the context while `clearContext` controls if the context is cleared after an event was captured.
 
 ## Download
