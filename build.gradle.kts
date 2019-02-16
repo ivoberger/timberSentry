@@ -7,13 +7,13 @@ buildscript {
 
     }
     dependencies {
-        classpath Libs.com_android_tools_build_gradle
-        classpath Libs.kotlin_gradle_plugin
+        classpath(Libs.com_android_tools_build_gradle)
+        classpath(Libs.kotlin_gradle_plugin)
     }
 }
 
 plugins {
-    id("de.fayard.buildSrcVersions") version "0.3.2"
+    id("de.fayard.buildSrcVersions") version Versions.de_fayard_buildsrcversions_gradle_plugin
 }
 
 allprojects {
@@ -24,6 +24,9 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks {
+    val clean by registering(Delete::class) {
+        delete(buildDir)
+    }
 }
+
