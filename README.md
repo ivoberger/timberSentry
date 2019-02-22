@@ -60,7 +60,7 @@ allprojects {
 Add to your module `build.gradle`:
 ```groovy
 dependencies {
-    implementation 'com.ivoberger:timberSentry:0.2.2'
+    implementation 'com.ivoberger:timberSentry:0.3.0'
 }
 ```
 
