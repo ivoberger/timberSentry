@@ -1,4 +1,4 @@
-package me.iberger.timbersentry
+package com.ivoberger.timbersentry
 
 fun Iterable<Pair<String, Any>>.toSentryExtras(): String =
     map { "|${it.first}|${it.second}" }.reduce { extras, current -> "$extras$current" }

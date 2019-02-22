@@ -1,4 +1,4 @@
-package me.iberger.timbersentry
+package com.ivoberger.timbersentry
 
 import android.content.Context
 import android.util.Log

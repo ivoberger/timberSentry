@@ -15,9 +15,9 @@ object Versions {
 
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.3.2"
 
-    const val sentry_android: String = "1.7.20"
+    const val sentry_android: String = "1.7.21"
 
-    const val org_jetbrains_kotlin: String = "1.3.21" 
+    const val org_jetbrains_kotlin: String = "1.3.21"
 
     /**
      *
@@ -29,7 +29,7 @@ object Versions {
 
         const val currentVersion: String = "5.2.1"
 
-        const val nightlyVersion: String = "5.3-20190211022529+0000"
+        const val nightlyVersion: String = "5.4-20190222000101+0000"
 
         const val releaseCandidate: String = ""
     }
