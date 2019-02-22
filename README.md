@@ -1,4 +1,4 @@
-# Timber Sentry [![](https://jitpack.io/v/IIIuminator/timberSentry.svg)](https://jitpack.io/#IIIuminator/timberSentry)
+# Timber Sentry [![](https://jitpack.io/v/com.ivoberger/timberSentry.svg)](https://jitpack.io/#com.ivoberger/timberSentry)
 
 This is a small library combining the [Sentry][1] error reporting tool and [Timber][2] logging library.
 Currently only Android is supported.
@@ -60,7 +60,7 @@ allprojects {
 Add to your module `build.gradle`:
 ```groovy
 dependencies {
-    implementation 'com.github.IIIuminator:timberSentry:0.2.0'
+    implementation 'com.ivoberger:timberSentry:0.2.2'
 }
 ```
 
