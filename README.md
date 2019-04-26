@@ -4,6 +4,8 @@ This is a small library combining the [Sentry][1] error reporting tool and [Timb
 Currently only Android is supported.
 
 ## Usage
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FIIIuminator%2FtimberSentry.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FIIIuminator%2FtimberSentry?ref=badge_shield)
+
 
 The library provides a `SentryTree` which implements `Timber.Tree` and initializes Sentry for you. The simplest version is:
 ```Kotlin
@@ -84,3 +86,6 @@ dependencies {
 [1]: https://sentry.io/
 [2]: https://github.com/JakeWharton/timber
 [3]: https://docs.sentry.io/clients/java/context/
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FIIIuminator%2FtimberSentry.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FIIIuminator%2FtimberSentry?ref=badge_large)
