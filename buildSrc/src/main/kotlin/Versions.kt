@@ -15,7 +15,7 @@ object Versions {
 
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.7.0"
 
-    const val sentry_android: String = "1.7.21"
+    const val sentry_android: String = "2.0.2"
 
     const val org_jetbrains_kotlin: String = "1.3.71"
 

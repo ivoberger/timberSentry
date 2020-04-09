@@ -28,7 +28,7 @@ object Libs {
             Versions.de_fayard_buildsrcversions_gradle_plugin
 
     /**
-     * https://github.com/${github.repo} */
+     * https://github.com/getsentry/sentry-android */
     const val sentry_android: String = "io.sentry:sentry-android:" + Versions.sentry_android
 
     /**
