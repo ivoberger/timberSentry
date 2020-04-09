@@ -1,90 +1,84 @@
 package com.ivoberger.timbersentry
 
-import android.content.Context
 import android.util.Log
-import io.sentry.Sentry
-import io.sentry.android.AndroidSentryClientFactory
-import io.sentry.event.Breadcrumb
-import io.sentry.event.BreadcrumbBuilder
-import io.sentry.event.Event
-import io.sentry.event.EventBuilder
-import io.sentry.event.interfaces.ExceptionInterface
+import io.sentry.core.Breadcrumb
+import io.sentry.core.Sentry
+import io.sentry.core.SentryEvent
+import io.sentry.core.SentryLevel
+import io.sentry.core.protocol.Message
 import timber.log.Timber
 
 class SentryTree(
-    sentryDsn: String? = null,
-    context: Context? = null,
     private val minCapturePriority: Int = Log.ERROR,
     private val minBreadcrumbPriority: Int = Log.INFO,
     private val clearContext: Boolean = true,
-    private val addAllExtrasToContext: Boolean = false,
     private val extrasDelimiter: Char = '|'
 ) : Timber.Tree() {
 
-    init {
-        when {
-            context != null && sentryDsn != null ->
-                Sentry.init(sentryDsn, AndroidSentryClientFactory(context.applicationContext))
-            context != null && sentryDsn == null ->
-                Sentry.init(AndroidSentryClientFactory(context.applicationContext))
-            context == null && sentryDsn != null ->
-                Sentry.init(sentryDsn)
-            else -> Sentry.init()
-        }
+    override fun isLoggable(tag: String?, priority: Int): Boolean {
+        return priority >= minBreadcrumbPriority
     }
 
-    override fun isLoggable(tag: String?, priority: Int): Boolean =
-        priority >= minBreadcrumbPriority
-
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        val breadcrumbLevel: Breadcrumb.Level = when (priority) {
-            Log.ASSERT -> Breadcrumb.Level.CRITICAL
-            Log.ERROR -> Breadcrumb.Level.ERROR
-            Log.WARN -> Breadcrumb.Level.WARNING
-            Log.INFO -> Breadcrumb.Level.INFO
-            Log.DEBUG -> Breadcrumb.Level.DEBUG
-            Log.VERBOSE -> Breadcrumb.Level.DEBUG
+    override fun log(priority: Int, tag: String?, message: String, throwable: Throwable?) {
+        val level: SentryLevel = when (priority) {
+            Log.ASSERT -> SentryLevel.FATAL
+            Log.ERROR -> SentryLevel.ERROR
+            Log.WARN -> SentryLevel.WARNING
+            Log.INFO -> SentryLevel.INFO
+            Log.DEBUG -> SentryLevel.DEBUG
+            Log.VERBOSE -> SentryLevel.DEBUG
             else -> return
         }
-        val msgSplit = message.split(extrasDelimiter)
-        val extras = mutableMapOf<String, Any>()
-        val finalMessage = if (msgSplit.size >= 3) {
-            val parsedExtras = msgSplit.subList(1, msgSplit.size)
-            for (index in 0 until parsedExtras.size step 2) {
-                if (index == parsedExtras.size - 1) return
-                extras[parsedExtras[index]] = parsedExtras[index + 1]
-            }
-            msgSplit[0]
-        } else message
-
-
-        Sentry.getContext().addTag("LogTag", tag)
 
         if (priority >= minCapturePriority) {
-            val eventLevel: Event.Level = when (priority) {
-                Log.ASSERT -> Event.Level.FATAL
-                Log.ERROR -> Event.Level.ERROR
-                Log.WARN -> Event.Level.WARNING
-                Log.INFO -> Event.Level.INFO
-                Log.DEBUG -> Event.Level.DEBUG
-                Log.VERBOSE -> Event.Level.DEBUG
-                else -> return
+            val event = buildEvent(level, tag, message, throwable)
+            Sentry.captureEvent(event)
+            if (clearContext) {
+                Sentry.clearBreadcrumbs()
             }
-            val event = EventBuilder()
-                .withLevel(eventLevel)
-                .withMessage(finalMessage)
-            extras.forEach { (lbl, extra) -> event.withExtra(lbl, extra) }
-            t?.let { event.withSentryInterface(ExceptionInterface(it)) }
-            Sentry.capture(event)
-            if (addAllExtrasToContext) extras.forEach { (lbl, extra) ->
-                Sentry.getContext().addExtra(lbl, extra)
-            }
-            if (clearContext) Sentry.clearContext()
+
         } else {
-            extras.forEach { (lbl, extra) -> Sentry.getContext().addExtra(lbl, extra) }
-            Sentry.getContext().recordBreadcrumb(
-                BreadcrumbBuilder().setMessage(finalMessage).setLevel(breadcrumbLevel).build()
-            )
+            val breadcrumb = Breadcrumb()
+            breadcrumb.level = level
+            breadcrumb.message = message
+            Sentry.addBreadcrumb(breadcrumb)
         }
     }
+
+    private fun buildEvent(level: SentryLevel, tag: String?, message: String, throwable: Throwable?): SentryEvent {
+        val (messageContent, extras) = splitMessageAndExtras(message)
+
+        val event = SentryEvent()
+        event.level = level
+        event.message = Message()
+        event.message.formatted = messageContent
+        tag?.let {
+            event.setTag("LogTag", it)
+        }
+        extras.forEach { (label, extra) ->
+            event.setExtra(label, extra)
+        }
+        throwable?.let {
+            event.setThrowable(throwable)
+        }
+
+        return event
+    }
+
+    private fun splitMessageAndExtras(message: String): Pair<String, Map<String, String>> {
+        val extras = mutableMapOf<String, String>()
+        extras["__timberOriginalMessage"] = message
+
+        val messageParts = message.split(extrasDelimiter)
+        if (messageParts.size.rem(2) == 0) {
+            return message to extras // fallback
+        }
+
+        for (index in 1 until messageParts.size step 2) {
+            extras[messageParts[index]] = messageParts[index+1]
+        }
+
+        return messageParts[0] to extras
+    }
+
 }

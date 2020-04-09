@@ -5,19 +5,19 @@
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val com_android_tools_build_gradle: String = "3.3.1"
+    const val com_android_tools_build_gradle: String = "3.6.2"
 
-    const val lint_gradle: String = "26.3.1"
+    const val lint_gradle: String = "26.6.2"
 
     const val com_github_dcendents_android_maven_gradle_plugin: String = "2.1"
 
     const val timber: String = "4.7.1"
 
-    const val de_fayard_buildsrcversions_gradle_plugin: String = "0.3.2"
+    const val de_fayard_buildsrcversions_gradle_plugin: String = "0.7.0"
 
-    const val sentry_android: String = "1.7.21"
+    const val sentry_android: String = "2.0.2"
 
-    const val org_jetbrains_kotlin: String = "1.3.21"
+    const val org_jetbrains_kotlin: String = "1.3.71"
 
     /**
      *
@@ -25,11 +25,11 @@ object Versions {
      *      ./gradle/wrapper/gradle-wrapper.properties
      */
     object Gradle {
-        const val runningVersion: String = "5.2.1"
+        const val runningVersion: String = "6.3"
 
-        const val currentVersion: String = "5.2.1"
+        const val currentVersion: String = "6.3"
 
-        const val nightlyVersion: String = "5.4-20190222000101+0000"
+        const val nightlyVersion: String = "6.5-20200408220925+0000"
 
         const val releaseCandidate: String = ""
     }
